@@ -6,6 +6,7 @@
   * [Facebook](#facebook)
   * [Instagram](#instagram)
   * [LinkedIn](#linkedin)
+  * [Reddit](#reddit)
   * [Twitter](#twitter)
 * [Members](#members)
 ## Project Information
@@ -17,11 +18,24 @@ SoEye is a social media forensics tool. It supports the investigation of Instagr
 * pandas (pip3 install pandas)
 
 ## Usage
+By running scraper.py the programm asks you to  enter the username for different social media platforms and the number of posts to investigate. After entering those the program will save the data into csv files coresponding to each social media platform. Below is a list of currently supported data of each platform.
 ### Facebook
 ### Instagram
 ### LinkedIn
+### Reddit
+* Posts
+  * Date of post creation
+  * Url of post
+  * Subreddit posted in
+  * Title of the post
+  * Text contained in the post
+  * Links to media in the post 
+* Comments
+  * Date of comment creation
+  * Url of comment
+  * Subreddit commented in
+  * Text contained in the comment
 ### Twitter
-By running twitter.py the programm asks you to enter the username and the number of posts to investigate. After entering those the programm will save the data into a csv file. Investigated data currently includes: 
 * Date of tweet creation
 * Source of upload 
 * Number of Likes
