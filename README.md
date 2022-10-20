@@ -1,53 +1,44 @@
 # SoEye
-## Table of contents
-* [Project Information](#project-information)
-* [Dependencies](#dependencies)
-* [Usage](#usage)
-  * [Facebook](#facebook)
-  * [Instagram](#instagram)
-  * [LinkedIn](#linkedin)
-  * [Reddit](#reddit)
-  * [Twitter](#twitter)
-* [Members](#members)
-## Project Information
 SoEye is a social media forensics tool. It supports the investigation of Instagram, Twitter, Facebook, and LinkedIn. It was developed as group project for CSS453 - Cyber Crimes and Digital Forensics in the first semester of the academic year 2022 at Sirindhorn International Institute of Technology (SIIT), Thammasat University.
 
 ## Dependencies
-* Python 3.8 or higher
-* snscrape (pip3 install snscrape)
-* pandas (pip3 install pandas)
+- [Python 3.8](https://www.python.org/downloads/) or higher
+- snscrape
+```
+pip3 install snscrape
+```
+- pandas
+```
+pip3 install pandas
+```
+
+## Installation
+```
+pip3 install git+https://github.com/levinKaus/SoEye
+```
 
 ## Usage
-By running scraper.py the programm asks you to enter the project details and creates the initial folders and files. After that it asks you to enter the username for different social media platforms and the number of posts to investigate. After entering those the program will save the data into csv files coresponding to each social media platform. Below is a list of currently supported data of each platform.
-### Facebook
-### Instagram
-### LinkedIn
-### Reddit
-* Posts
-  * Date of post creation
-  * Url of post
-  * Subreddit posted in
-  * Title of the post
-  * Text contained in the post
-  * Links to media in the post 
-* Comments
-  * Date of comment creation
-  * Url of comment
-  * Subreddit commented in
-  * Text contained in the comment
-### Twitter
-* Date of tweet creation
-* Source of upload 
-* Number of Likes
-* Text content of tweets
-* Links to media in tweets
-* Links to thirdparties
-* Number of replies
-* Number of retweets
-* Number of quotes
-* If the tweet is a retweet
-* If the tweet is a quoted tweet
-* Tagged users of tweets
+SoEye is a CLI tool. That means you can use it with your command promt. Therfore open your command promt of choice and navigate to the folder you downloaded SoEye to. In the following there is a list of commands you can run, exemplary for windows. (Run all commands without the <> symbols)
+- Initialization (always run this command first)
+```
+py soeye.py init <project number> <'project file name'> <'project description'>
+```
+- Reddit user search
+```
+py soeye.py reddit <'username'> <number of posts to investigate>
+```
+- Twitter user search
+```
+py soeye.py twitter <'username'> <number of posts to investigate>
+```
+- See all available commands
+```
+py soeye.py --help
+```
+- See arguments of a command
+```
+py soeye.py <command> --help
+```
 
 ## Members
 * Annu Maria Keranen (6522808202)
