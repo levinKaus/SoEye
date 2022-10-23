@@ -11,7 +11,10 @@ pip3 install snscrape
 ```
 pip3 install pandas
 ```
-
+- typer
+```
+pip3 install "typer[all]"
+```
 ## Installation
 ```
 git clone https://github.com/levinKaus/SoEye.git
