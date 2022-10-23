@@ -14,7 +14,7 @@ pip3 install pandas
 
 ## Installation
 ```
-pip3 install git+https://github.com/levinKaus/SoEye
+git clone https://github.com/levinKaus/SoEye.git
 ```
 
 ## Usage
