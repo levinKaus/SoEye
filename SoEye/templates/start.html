@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SoEye</title>
+    <link rel="icon" type="image/png" href="../static/img/soeye_favicon.png">
+	<link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>SOEYE</h2>
+        <ul>
+            <li><a href="/start">Start</a></li>
+            <li><a href="/report">Report</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/results">Results</a></li>
+            <li><a href="/about">About</a></li>
+        </ul> 
+    </div>
+    <div class="main_content">
+        <div class="header">SoEye - Start</div>  
+        <div class="info">
+            <div class="center">
+                <form id="details" action="/set_details" method="POST" class="center-border">
+                    <label for="project_number">Project Number:</label>
+                    <input type="number" id="project_number" name="project_number"><br><br>
+                    <label for="project_name">Project File Name:</label>
+                    <input type="text" id="project_name" name="project_name"><br><br>
+                    <label for="descrition">Description:</label>
+                    <input type="text" id="project_description" name="project_description"><br><br>
+                    <button type="submit">Open</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>    
+</body>
+</html>

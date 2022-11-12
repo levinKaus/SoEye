@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SoEye</title>
+    <link rel="icon" type="image/png" href="../static/img/soeye_favicon.png">
+	<link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>SOEYE</h2>
+        <ul>
+            <li><a href="/start">Start</a></li>
+            <li><a href="/report">Report</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/results">Results</a></li>
+            <li><a href="/about">About</a></li>
+        </ul> 
+    </div>
+    <div class="main_content">
+        <div class="header">SoEye - Search</div>  
+        <div class="info">
+        <div class="center">
+            <form action="/reddit" method="POST" class="center-border">
+                <p><b>Search Reddit</b></p>
+                <label for="username">Reddit username:</label>
+                <input type="text" id="username" name="username"><br>
+                <label for="username">Reddit post number:</label>
+                <input type="number" id="number" name="number"><br>
+                <input type="Submit">
+            </form>
+        </div>
+        <div class="center">
+            <form action="/twitter" method="POST" class="center-border">
+                <p><b>Search Twitter</b></p>
+                <label for="username">Twitter username:</label>
+                <input type="text" id="username" name="username"><br>
+                <label for="username">Twitter post number:</label>
+                <input type="number" id="number" name="number"><br>
+                <input type="Submit">
+            </form>
+        </div>
+        <div class="center">
+            <form action="/search_keyword" method="POST" class="center-border">
+                <p><b>Search for keywords</b></p>
+                <label for="keyword">Keyword:</label>
+                <input type="text" id="keyword" name="keyword"><br>
+                <input type="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

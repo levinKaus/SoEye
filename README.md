@@ -1,5 +1,5 @@
 # SoEye
-SoEye is a social media forensics tool. It supports the investigation of Instagram, Twitter, Facebook, and LinkedIn. It was developed as group project for CSS453 - Cyber Crimes and Digital Forensics in the first semester of the academic year 2022 at Sirindhorn International Institute of Technology (SIIT), Thammasat University.
+SoEye is a social media forensics tool. It supports the investigation of Reddit and Twitter. It was developed as group project for CSS453 - Cyber Crimes and Digital Forensics in the first semester of the academic year 2022 at Sirindhorn International Institute of Technology (SIIT), Thammasat University, Thailand.
 
 ## Dependencies
 - [Python 3.8](https://www.python.org/downloads/) or higher
@@ -11,9 +11,9 @@ pip3 install snscrape
 ```
 pip3 install pandas
 ```
-- typer
+- flask
 ```
-pip3 install "typer[all]"
+pip3 install Flask
 ```
 ## Installation
 ```
@@ -21,27 +21,20 @@ git clone https://github.com/levinKaus/SoEye.git
 ```
 
 ## Usage
-SoEye is a CLI tool. That means you can use it with your command promt. Therfore open your command promt of choice and navigate to the folder you downloaded SoEye to. In the following there is a list of commands you can run, exemplary for windows. (Run all commands without the <> symbols)
-- Initialization (always run this command first)
+- Open a terminal and move to the folder you cloned the reposetory to
+- Start the app using the following command
 ```
-py soeye.py init <project number> <'project file name'> <'project description'>
+flask --app soeye run
 ```
-- Reddit user search
+- Open your browser and go the following website
 ```
-py soeye.py reddit <'username'> <number of posts to investigate>
-```
-- Twitter user search
-```
-py soeye.py twitter <'username'> <number of posts to investigate>
-```
-- See all available commands
-```
-py soeye.py --help
-```
-- See arguments of a command
-```
-py soeye.py <command> --help
-```
+http://localhost:5000/
+``` 
+
+
+Alternative: 
+- Run the `soeye.bat` file which does the previous described for you
+
 
 ## Members
 * Annu Maria Keranen (6522808202)
