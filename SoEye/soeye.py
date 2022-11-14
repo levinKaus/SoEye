@@ -32,6 +32,7 @@ def results():
     current_directory = os.getcwd()
     project_path = os.path.join(current_directory, 'static\html')
     files = os.listdir(project_path)
+    files.remove('.gitkeep')
     files.reverse()
     return render_template('results.html', files=files)
 
