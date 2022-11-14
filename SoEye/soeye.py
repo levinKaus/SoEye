@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
-import snscrape.modules.twitter as sntwitter
-import snscrape.modules.reddit as snreddit
-from datetime import datetime
-import pandas as pd
 import json
 import os
+from datetime import datetime
+
+import pandas as pd
+import snscrape.modules.reddit as snreddit
+import snscrape.modules.twitter as sntwitter
+from flask import Flask, render_template, request
 
 soeye = Flask(__name__)
 
@@ -29,9 +30,9 @@ def report():
 @soeye.route('/results')
 def results():
     current_directory = os.getcwd()
-    project_path = os.path.join(current_directory, 'static\json')
+    project_path = os.path.join(current_directory, 'static\html')
     files = os.listdir(project_path)
-    files.remove('report.json')
+    files.reverse()
     return render_template('results.html', files=files)
 
 @soeye.route('/search')
@@ -43,10 +44,8 @@ def search():
 @soeye.route('/search_result', methods=['POST'])
 def search_result():
     form_data = request.form.to_dict()
-    json_file = open('static/json/'+form_data['file_name'])
-    data = pd.DataFrame(json.load(json_file))
-    json_file.close()
-    return render_template('results.html', tables=[data.to_html()], titles=[''])
+    data = pd.read_html('static/html/'+form_data['file_name'])
+    return render_template('results.html', tables=[data[0].to_html(index=False, justify='left')], titles=[''])
 
 
 # Set project details
@@ -68,7 +67,7 @@ def set_details():
 # Social media search
 @soeye.route('/twitter', methods=['POST'])
 def twitter():
-    timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     twitter_posts = []
     form_data = request.form.to_dict()
     for i, post in enumerate(sntwitter.TwitterSearchScraper('from:'+form_data['username']).get_items()):
@@ -78,12 +77,12 @@ def twitter():
         post.replyCount, post.retweetCount, post.quoteCount, post.retweetedTweet, post.quotedTweet, post.mentionedUsers])
     data = pd.DataFrame(twitter_posts, columns=['Date', 'Source', 'Likes', 'Tweet', 'Media', 'Outlinks', 'Replies', 'Retweets', 
     'Quotes', 'Retweeted', 'Quoted', 'Tagged'])
-    data.to_json('static/json/twitter_posts_'+form_data['username']+' '+timestamp+'.json', indent=4)
-    return render_template('results.html', tables=[data.to_html()], titles=['']) 
+    data.to_html('static/html/'+timestamp+'_'+'twitter_posts_'+form_data['username']+'.html', index=False, justify='left')
+    return render_template('results.html', tables=[data.to_html(index=False, justify='left')], titles=['']) 
 
 @soeye.route('/reddit', methods=['POST'])
 def reddit():
-    timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     reddit_submissions = []
     reddit_comments = []
     form_data = request.form.to_dict()
@@ -96,10 +95,10 @@ def reddit():
             reddit_comments.append([post.date, post.url, post.subreddit, post.body])
 
     data_submussions = pd.DataFrame(reddit_submissions, columns=['Date', 'Url', 'Subreddit', 'Title', 'Text', 'Media'])
-    data_submussions.to_json('static/json/reddit_submissions_'+form_data['username']+' '+timestamp+'.json', indent=4)
+    data_submussions.to_html('static/html/'+timestamp+'_'+'reddit_submissions_'+form_data['username']+'.html', index=False, justify='left')
     data_comments = pd.DataFrame(reddit_comments, columns=['Date', 'Url', 'Subreddit', 'Text',])
-    data_comments.to_json('static/json/reddit_comments_'+form_data['username']+' '+timestamp+'.json', indent=4)
-    return  render_template('results.html', tables=[data_submussions.to_html()], titles=['']) 
+    data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False, justify='left')
+    return  render_template('results.html', tables=[data_submussions.to_html(index=False, justify='left')], titles=['']) 
 
 
 if __name__ == "__main__":
