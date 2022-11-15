@@ -25,7 +25,7 @@ def report():
     project_details = json.load(json_file)
     json_file.close()
     return render_template('report.html', project_name=project_details['project_name'], project_number=project_details['project_number'],
-    project_description=project_details['project_description'], interest_number=project_details['interest_number'])
+    project_description=project_details['project_description'], interest_number=project_details['interest_number'], data_of_interest=project_details['data_of_interest'])
 
 @soeye.route('/results')
 def results():
@@ -62,7 +62,7 @@ def set_details():
     with open('static/json/report.json', 'w') as f:
         json.dump(project_details, f, indent=4)
     return render_template('report.html', project_name=project_details['project_name'], project_number=project_details['project_number'],
-    project_description=project_details['project_description'], interest_number=project_details['interest_number'])
+    project_description=project_details['project_description'], interest_number=project_details['interest_number'], data_of_interest=project_details['data_of_interest'])
 
 
 # Social media search
@@ -100,6 +100,17 @@ def reddit():
     data_comments = pd.DataFrame(reddit_comments, columns=['Date', 'Url', 'Subreddit', 'Text',])
     data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False)
     return  render_template('results.html', tables=[data_submussions.to_html(index=False)], titles=['']) 
+
+@soeye.route('/add_evidence', methods=['GET', 'POST'])
+def test():
+    json_file = open('static/json/report.json')
+    report = json.load(json_file)
+    json_file.close()
+    report['data_of_interest'].append(request.json) 
+    with open('static/json/report.json', 'w') as f:
+        json.dump(report, f, indent=4)
+    return render_template('report.html', project_name=report['project_name'], project_number=report['project_number'],
+    project_description=report['project_description'], interest_number=report['interest_number'], data_of_interest=report['data_of_interest'])
 
 
 if __name__ == "__main__":

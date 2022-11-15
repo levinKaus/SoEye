@@ -42,7 +42,7 @@ body{
   padding: 15px;    
 }    
 
-.wrapper .sidebar ul li a{
+.wrapper .sidebar ul a li{
   color: var(--color4);
   display: block;
 }
@@ -51,7 +51,7 @@ body{
   background-color: var(--color3);
 }
     
-.wrapper .sidebar ul li:hover a{
+.wrapper .sidebar ul a li:hover{
   color: var(--color1);
 }
  
@@ -133,4 +133,8 @@ table th {
   text-align: left;
   background-color: var(--color2);
   color: var(--color3);
+}
+
+tr {
+  cursor: pointer;
 }
