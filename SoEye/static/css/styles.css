@@ -113,3 +113,24 @@ img {
   margin-right: auto;
   width: 200px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: var(--color5);}
+table tr:hover {background-color: var(--color3);}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--color2);
+  color: var(--color3);
+}

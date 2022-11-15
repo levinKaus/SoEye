@@ -5,7 +5,7 @@ SoEye is a social media forensics tool. It supports the investigation of Reddit 
 - [Python 3.8](https://www.python.org/downloads/) or higher
 - snscrape
 ```
-pip3 install snscrape
+pip3 install git+https://github.com/JustAnotherArchivist/snscrape.git
 ```
 - pandas
 ```

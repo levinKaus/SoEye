@@ -46,7 +46,7 @@ def search():
 def search_result():
     form_data = request.form.to_dict()
     data = pd.read_html('static/html/'+form_data['file_name'])
-    return render_template('results.html', tables=[data[0].to_html(index=False, justify='left')], titles=[''])
+    return render_template('results.html', tables=[data[0].to_html(index=False)], titles=[''])
 
 
 # Set project details
@@ -78,8 +78,8 @@ def twitter():
         post.replyCount, post.retweetCount, post.quoteCount, post.retweetedTweet, post.quotedTweet, post.mentionedUsers])
     data = pd.DataFrame(twitter_posts, columns=['Date', 'Source', 'Likes', 'Tweet', 'Media', 'Outlinks', 'Replies', 'Retweets', 
     'Quotes', 'Retweeted', 'Quoted', 'Tagged'])
-    data.to_html('static/html/'+timestamp+'_'+'twitter_posts_'+form_data['username']+'.html', index=False, justify='left')
-    return render_template('results.html', tables=[data.to_html(index=False, justify='left')], titles=['']) 
+    data.to_html('static/html/'+timestamp+'_'+'twitter_posts_'+form_data['username']+'.html', index=False)
+    return render_template('results.html', tables=[data.to_html(index=False)], titles=['']) 
 
 @soeye.route('/reddit', methods=['POST'])
 def reddit():
@@ -96,10 +96,10 @@ def reddit():
             reddit_comments.append([post.date, post.url, post.subreddit, post.body])
 
     data_submussions = pd.DataFrame(reddit_submissions, columns=['Date', 'Url', 'Subreddit', 'Title', 'Text', 'Media'])
-    data_submussions.to_html('static/html/'+timestamp+'_'+'reddit_submissions_'+form_data['username']+'.html', index=False, justify='left')
+    data_submussions.to_html('static/html/'+timestamp+'_'+'reddit_submissions_'+form_data['username']+'.html', index=False)
     data_comments = pd.DataFrame(reddit_comments, columns=['Date', 'Url', 'Subreddit', 'Text',])
-    data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False, justify='left')
-    return  render_template('results.html', tables=[data_submussions.to_html(index=False, justify='left')], titles=['']) 
+    data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False)
+    return  render_template('results.html', tables=[data_submussions.to_html(index=False)], titles=['']) 
 
 
 if __name__ == "__main__":
