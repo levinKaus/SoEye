@@ -106,7 +106,8 @@ def test():
     json_file = open('static/json/report.json')
     report = json.load(json_file)
     json_file.close()
-    report['data_of_interest'].append(request.json) 
+    report['data_of_interest'].append(request.json)
+    report['interest_number'] = len(report['data_of_interest'])
     with open('static/json/report.json', 'w') as f:
         json.dump(report, f, indent=4)
     return render_template('report.html', project_name=report['project_name'], project_number=report['project_number'],
