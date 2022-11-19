@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 from datetime import datetime
@@ -74,10 +75,13 @@ def twitter():
     for i, post in enumerate(sntwitter.TwitterSearchScraper('from:'+form_data['username']).get_items()):
         if i>=int(form_data['number']):
             break
-        twitter_posts.append([post.date, post.sourceLabel, post.likeCount, post.rawContent, post.media, post.links, 
-        post.replyCount, post.retweetCount, post.quoteCount, post.retweetedTweet, post.quotedTweet, post.mentionedUsers])
+        post_data = [post.date, post.sourceLabel, post.likeCount, post.rawContent, post.media, post.links, 
+        post.replyCount, post.retweetCount, post.quoteCount, post.retweetedTweet, post.quotedTweet, post.mentionedUsers]
+        hash_value = hashlib.md5(json.dumps(post_data, sort_keys=True, default=str).encode('utf-8')).hexdigest()
+        post_data.append(hash_value)
+        twitter_posts.append(post_data)
     data = pd.DataFrame(twitter_posts, columns=['Date', 'Source', 'Likes', 'Tweet', 'Media', 'Outlinks', 'Replies', 'Retweets', 
-    'Quotes', 'Retweeted', 'Quoted', 'Tagged'])
+    'Quotes', 'Retweeted', 'Quoted', 'Tagged', 'hashValue'])
     data.to_html('static/html/'+timestamp+'_'+'twitter_posts_'+form_data['username']+'.html', index=False)
     return render_template('results.html', tables=[data.to_html(index=False)], titles=['']) 
 
@@ -91,13 +95,19 @@ def reddit():
         if i>=int(form_data['number']):
             break
         if isinstance(post, snreddit.Submission):
-            reddit_submissions.append([post.date, post.url, post.subreddit, post.title, post.selftext, post.link])
+            post_data = [post.date, post.url, post.subreddit, post.title, post.selftext, post.link]
+            hash_value = hashlib.md5(json.dumps(post_data, sort_keys=True, default=str).encode('utf-8')).hexdigest()
+            post_data.append(hash_value)
+            reddit_submissions.append(post_data)
         elif isinstance(post, snreddit.Comment):
-            reddit_comments.append([post.date, post.url, post.subreddit, post.body])
+            post_data = [post.date, post.url, post.subreddit, post.body]
+            hash_value = hashlib.md5(json.dumps(post_data, sort_keys=True, default=str).encode('utf-8')).hexdigest()
+            post_data.append(hash_value)
+            reddit_comments.append(post_data)
 
-    data_submussions = pd.DataFrame(reddit_submissions, columns=['Date', 'Url', 'Subreddit', 'Title', 'Text', 'Media'])
+    data_submussions = pd.DataFrame(reddit_submissions, columns=['Date', 'Url', 'Subreddit', 'Title', 'Text', 'Media', 'hashValue'])
     data_submussions.to_html('static/html/'+timestamp+'_'+'reddit_submissions_'+form_data['username']+'.html', index=False)
-    data_comments = pd.DataFrame(reddit_comments, columns=['Date', 'Url', 'Subreddit', 'Text',])
+    data_comments = pd.DataFrame(reddit_comments, columns=['Date', 'Url', 'Subreddit', 'Text', 'hashValue'])
     data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False)
     return  render_template('results.html', tables=[data_submussions.to_html(index=False)], titles=['']) 
 
