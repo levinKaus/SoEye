@@ -42,6 +42,7 @@ Once started proceed as follows:
 - Conduct a keyword search on the search side
 - Select evidence to be added to the report by clicking on a row of the result table
 - Remove evidence from the report by clicking on it in the report
+- The report can be extracted as json file under the following path: SoEye/static/json/report.json 
 
 
 ## Members
