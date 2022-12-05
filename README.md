@@ -35,6 +35,14 @@ http://localhost:5000/
 Alternative: 
 - Run the `soeye.bat` file which does the previous described for you
 
+Once started proceed as follows:
+- Set the project details on the start page
+- Start a search on the search page
+- Inspect search results on the results page
+- Conduct a keyword search on the search side
+- Select evidence to be added to the report by clicking on a row of the result table
+- Remove evidence from the report by clicking on it in the report
+
 
 ## Members
 * Annu Maria Keranen (6522808202)

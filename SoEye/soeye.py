@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 from datetime import datetime
-
+import numpy as np
 import pandas as pd
 import snscrape.modules.reddit as snreddit
 import snscrape.modules.twitter as sntwitter
@@ -26,7 +26,8 @@ def report():
     project_details = json.load(json_file)
     json_file.close()
     return render_template('report.html', project_name=project_details['project_name'], project_number=project_details['project_number'],
-    project_description=project_details['project_description'], interest_number=project_details['interest_number'], data_of_interest=project_details['data_of_interest'])
+    project_description=project_details['project_description'], interest_number=project_details['interest_number'], 
+    data_of_interest=project_details['data_of_interest'])
 
 @soeye.route('/results')
 def results():
@@ -39,7 +40,12 @@ def results():
 
 @soeye.route('/search')
 def search():
-    return render_template('search.html')
+    current_directory = os.getcwd()
+    project_path = os.path.join(current_directory, 'static\html')
+    files = os.listdir(project_path)
+    files.remove('.gitkeep')
+    files.reverse()
+    return render_template('search.html', files=files)
 
 
 # Display search results
@@ -111,12 +117,45 @@ def reddit():
     data_comments.to_html('static/html/'+timestamp+'_'+'reddit_comments_'+form_data['username']+'.html', index=False)
     return  render_template('results.html', tables=[data_submussions.to_html(index=False)], titles=['']) 
 
+@soeye.route('/search_keyword', methods=['GET', 'POST'])
+def search_keyword():
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    form_data = request.form.to_dict()
+    substring = form_data['keyword']
+    data = pd.read_html('static/html/'+form_data['file_name'])
+    df = data[0]
+    mask = np.column_stack([df[col].astype(str).str.contains(substring.lower(), case=False, na=False) for col in df])
+    df = df.loc[mask.any(axis=1)]
+    if df.empty:
+        return render_template('results.html', no_result='No results for this search.')
+    else:
+        df.to_html('static/html/'+timestamp+'_'+'keyword_'+form_data['keyword']+'.html', index=False)
+        return render_template('results.html', tables=[df.to_html(index=False)], titles=[''])
+
+
+# Evidence handling
 @soeye.route('/add_evidence', methods=['GET', 'POST'])
-def test():
+def add_evidence():
     json_file = open('static/json/report.json')
     report = json.load(json_file)
     json_file.close()
     report['data_of_interest'].append(request.json)
+    report['interest_number'] = len(report['data_of_interest'])
+    with open('static/json/report.json', 'w') as f:
+        json.dump(report, f, indent=4)
+    return render_template('report.html', project_name=report['project_name'], project_number=report['project_number'],
+    project_description=report['project_description'], interest_number=report['interest_number'], data_of_interest=report['data_of_interest'])
+
+@soeye.route('/remove_evidence', methods=['GET', 'POST'])
+def remove_evidence():
+    json_file = open('static/json/report.json')
+    report = json.load(json_file)
+    json_file.close()
+    data = str(request.data)
+    data = data.replace("b", "")
+    data = data.replace("'", "")
+    i = int(data)
+    del report['data_of_interest'][i]
     report['interest_number'] = len(report['data_of_interest'])
     with open('static/json/report.json', 'w') as f:
         json.dump(report, f, indent=4)

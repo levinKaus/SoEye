@@ -138,3 +138,7 @@ table th {
 tr {
   cursor: pointer;
 }
+
+div .evidence {
+  cursor: pointer;
+}

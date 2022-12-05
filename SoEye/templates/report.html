@@ -25,13 +25,17 @@
                 <p><b><u class="section">Evidence Report for Project: </u></b>{{project_name}}</p>
                 <p><b class="subsection">Project Number: </b>{{project_number}}</p>
                 <p><b class="subsection">Project Description: </b>{{project_description}}</p>
-                <p>Total Evidence Items of Interest: {{interest_number}}</p>
                 <p><b class="subsection">Evidence of Interest:</b></p>
-                <p>{{data_of_interest}}</p>
+                <p>Total Evidence Items of Interest: {{interest_number}}</p>
+                {% for data in data_of_interest %}
+                    <div class="evidence">{{data}}</div>
+                {% endfor %}
                 <p><b class="subsection">This report was created by SoEye</b></p>
             </div>
         </div>
     </div>
-</div>    
+</div>
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/report_links.js"></script>
 </body>
 </html>

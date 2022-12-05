@@ -46,6 +46,12 @@
                 <p><b>Search for keywords</b></p>
                 <label for="keyword">Keyword:</label>
                 <input type="text" id="keyword" name="keyword"><br>
+                <label for="file_name">File to search:</label>
+                <select id="file_name" name="file_name">
+                    {% for file in files %}
+                    <option value="{{ file }}">{{ file }}</option>
+                    {% endfor %}
+                </select><br>
                 <input type="Submit">
             </form>
         </div>
